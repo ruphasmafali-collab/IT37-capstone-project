@@ -1,1 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Organization Event and Attendance System</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f6f9; margin: 0; padding: 20px; }
+        .container { max-width: 700px; margin: 30px auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        h1 { color: #333; font-size: 22px; text-align: center; margin-bottom: 25px; }
+        .section { background: #f8f9fa; padding: 20px; margin-bottom: 20px; border-radius: 6px; border-left: 4px solid #007bff; }
+        h3 { margin-top: 0; color: #007bff; }
+        input, select, button { width: 100%; padding: 10px; margin: 8px 0 15px 0; display: inline-block; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background: #007bff; color: white; border: none; cursor: pointer; font-weight: bold; }
+        button:hover { background: #0056b3; }
+        .output-box { background: #e9ecef; padding: 10px; border-radius: 4px; font-family: monospace; font-size: 13px; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Organization Event & Attendance System</h1>
 
+        <!-- Connection Test & Status -->
+        <div class="section">
+            <h3>System Connection</h3>
+            <button onclick="testConnection()">Test Database Connection</button>
+            <div id="statusOutput" class="output-box">Click to test connection...</div>
+        </div>
+
+        <!-- Register User -->
+        <div class="section">
+            <h3>Register User</h3>
+            <input type="text" id="regName" placeholder="Full Name">
+            <input type="email" id="regEmail" placeholder="Email Address">
+            <input type="password" id="regPassword" placeholder="Password">
+            <select id="regRole">
+                <option value="member">Member (Student)</option>
+                <option value="admin">Admin (Officer)</option>
+            </select>
+            <button onclick="registerUser()">Register</button>
+        </div>
+
+        <!-- Create Event -->
+        <div class="section">
+            <h3>Create Event (Admin)</h3>
+            <input type="text" id="evtTitle" placeholder="Event Title">
+            <input type="text" id="evtDesc" placeholder="Description">
+            <input type="date" id="evtDate">
+            <input type="text" id="evtLocation" placeholder="Location">
+            <input type="text" id="evtCreator" placeholder="Created By (Your Name)">
+            <button onclick="createEvent()">Create Event</button>
+        </div>
+    </div>
+
+    <script>
+        // PASTE YOUR DEPLOYED APPS SCRIPT WEB APP URL HERE:
+        const API_URL = "YOUR_WEB_APP_URL_HERE";
+
+        function testConnection() {
+            const out = document.getElementById('statusOutput');
+            out.innerText = "Connecting...";
+            fetch(API_URL + "?action=getEvents")
+                .then(res => res.json())
+                .then(data => {
+                    out.innerText = "Connected successfully! Events found: " + data.data.length;
+                })
+                .catch(err => {
+                    out.innerText = "Connection Error: " + err.message;
+                });
+        }
+
+        function registerUser() {
+            const payload = {
+                action: "registerUser",
+                name: document.getElementById('regName').value,
+                email: document.getElementById('regEmail').value,
+                password: document.getElementById('regPassword').value,
+                role: document.getElementById('regRole').value
+            };
+
+            fetch(API_URL, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(res => alert(res.message))
+            .catch(err => alert("Error: " + err));
+        }
+
+        function createEvent() {
+            const payload = {
+                action: "createEvent",
+                title: document.getElementById('evtTitle').value,
+                description: document.getElementById('evtDesc').value,
+                date: document.getElementById('evtDate').value,
+                location: document.getElementById('evtLocation').value,
+                created_by: document.getElementById('evtCreator').value
+            };
+
+            fetch(API_URL, {
+                method: "POST",
+                body: JSON.stringify(payload)
+            })
+            .then(res => res.json())
+            .then(res => alert(res.message))
+            .catch(err => alert("Error: " + err));
+        }
+    </script>
+</body>
+</html>
