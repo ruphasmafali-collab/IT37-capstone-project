@@ -18,14 +18,10 @@ The **Student Organization Event and Attendance System** is a web-based platform
   * `Attendance` (`id`, `event_id`, `user_id`, `status`, `timestamp`)
 
 ## 4. Project Team (IT 37)
-* Elritch Niño Balijon
-* Arriz Gaurano
-* Ramje Cataylo
-* Paul John Cataylo
-* Xander Sacbatona
-* Gabriel Cadalso
-* GM Alojado
-* Ranjel Dunghao
+* Elritch Balijon
+* Mary Kim Cule
+* Paul Jhon Cataylo
+* Rhian Denolan
 
 ## 5. Core Features
 1. **Role-Based Authentication:** Separate access levels for Organization Officers (`admin`) and Students (`member`).
