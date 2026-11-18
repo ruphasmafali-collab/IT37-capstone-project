@@ -48,7 +48,7 @@
             <input type="date" id="evtDate">
             <input type="text" id="evtLocation" placeholder="Location">
             <input type="text" id="evtCreator" placeholder="Created By (Your Name)">
-          <button onclick="createEvent()">Create Event</button>
+         <button onclick="createNewEvent()">Create Event</button>
         </div>
     </div>
 
@@ -87,7 +87,7 @@
             .catch(err => alert("Error: " + err));
         }
 
-        function createEvent() {
+       function createNewEvent() {
             const payload = {
                 action: "createEvent",
                 title: document.getElementById('evtTitle').value,
