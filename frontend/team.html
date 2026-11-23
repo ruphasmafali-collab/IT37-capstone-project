@@ -1,1 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meet the Team - Student Org Portal</title>
+    <style>
+        :root {
+            --primary: #0f766e;
+            --bg-color: #f3f4f6;
+            --card-bg: #ffffff;
+            --text-color: #1f2937;
+            --border-color: #d1d5db;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        header h1 { margin: 0; font-size: 1.5rem; }
+        .back-btn {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .back-btn:hover { background: rgba(255, 255, 255, 0.3); }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        .card h2 { margin-top: 0; color: var(--primary); }
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .member-card {
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 1rem;
+            background: #f9fafb;
+        }
+        .member-card h3 { margin: 0 0 0.5rem 0; color: var(--primary); }
+        .member-card p { margin: 0; font-size: 0.9rem; color: #4b5563; }
+    </style>
+</head>
+<body>
 
+    <header>
+        <h1>Project Team & Contributors</h1>
+        <a href="index.html" class="back-btn">&larr; Back to Dashboard</a>
+    </header>
+
+    <div class="container">
+        <div class="card">
+            <h2>BSIT Capstone Project Team</h2>
+            <p>This system was collaboratively designed, built, and tested by the following team members to satisfy the academic requirements for IT 37.</p>
+            
+            <div class="team-grid">
+                <!-- MEMBER 1 -->
+                <div class="member-card">
+                    <h3>Elritch Balijon</h3>
+                    <p><strong>Role:</strong> Lead Developer / Backend</p>
+                    <p>Managed Google Apps Script API, database integration, and cloud architecture.</p>
+                </div>
+
+                <!-- MEMBER 2 -->
+                <div class="member-card">
+                    <h3>Mary Kim Cule</h3>
+                    <p><strong>Role:</strong> Frontend & Documentation</p>
+                    <p>Assisted with UI structuring, user guides, and system feature testing.</p>
+                </div>
+
+                <!-- MEMBER 3 -->
+                <div class="member-card">
+                    <h3>Paul Jhon Cataylo</h3>
+                    <p><strong>Role:</strong> System Testing & QA</p>
+                    <p>Conducted Postman API test cases and validation error checks.</p>
+                </div>
+
+                <!-- MEMBER 4 -->
+                <div class="member-card">
+                    <h3>Rhian Denolan</h3>
+                    <p><strong>Role:</strong> Version Control & ERD</p>
+                    <p>Helped manage GitHub repository setup and database entity mapping.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
