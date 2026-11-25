@@ -1,201 +1,780 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Student Organization Event and Attendance System</title>
-    <style>
-        :root {
-            --primary: #0f766e;
-            --primary-hover: #115e59;
-            --bg-color: #f3f4f6;
-            --card-bg: #ffffff;
-            --text-color: #1f2937;
-            --border-color: #d1d5db;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            margin: 0;
-            padding: 0;
-        }
-        header {
-            background-color: var(--primary);
-            color: white;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        header h1 {
-            margin: 0;
-            font-size: 1.5rem;
-        }
-        .badge {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.85rem;
-        }
-        .container {
-            max-width: 800px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-        .card {
-            background: var(--card-bg);
-            border-radius: 8px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-            padding: 2rem;
-            margin-bottom: 2rem;
-        }
-        .card h2 {
-            margin-top: 0;
-            color: var(--primary);
-            font-size: 1.25rem;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 0.5rem;
-        }
-        .form-group {
-            margin-bottom: 1rem;
-        }
-        .form-group label {
-            display: block;
-            margin-bottom: 0.4rem;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 0.75rem;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            font-size: 1rem;
-            box-sizing: border-box;
-        }
-        input:focus, select:focus, textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 0 3px rgba(15, 118, 110, 0.15);
-        }
-        button {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            padding: 0.75rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: background-color 0.2s;
-        }
-        button:hover {
-            background-color: var(--primary-hover);
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Org Portal | Event & Attendance System</title>
+  <style>
+    :root {
+      --teal-dark: #0f3d3e;
+      --teal-primary: #145355;
+      --teal-hover: #0b2e2f;
+      --accent-amber: #d97706;
+      --bg-page: #f1f5f4;
+      --bg-card: #ffffff;
+      --text-main: #1e293b;
+      --text-muted: #64748b;
+      --border-light: #cbd5e1;
+      --success-bg: #dcfce7;
+      --success-text: #166534;
+      --error-bg: #fee2e2;
+      --error-text: #991b1b;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-page);
+      color: var(--text-main);
+      min-height: 100vh;
+    }
+
+    /* Concern Box style top navbar */
+    .topbar {
+      background-color: var(--teal-dark);
+      color: #ffffff;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+
+    .pill-badge {
+      background-color: var(--accent-amber);
+      color: #ffffff;
+      font-size: 0.78rem;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 999px;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .nav-link, .nav-btn {
+      background-color: rgba(255, 255, 255, 0.14);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 7px 14px;
+      border-radius: 6px;
+      font-size: 0.88rem;
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .nav-link:hover, .nav-btn:hover {
+      background-color: rgba(255, 255, 255, 0.24);
+    }
+
+    .container {
+      max-width: 1040px;
+      margin: 32px auto;
+      padding: 0 20px;
+    }
+
+    .auth-wrapper {
+      max-width: 520px;
+      margin: 20px auto;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border-radius: 10px;
+      padding: 28px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 14px rgba(15, 61, 62, 0.06);
+      margin-bottom: 24px;
+    }
+
+    .card h2 {
+      color: var(--teal-dark);
+      font-size: 1.35rem;
+      margin-bottom: 6px;
+    }
+
+    .card-subtitle {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 20px;
+    }
+
+    .tab-bar {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+      background: #e2e8f0;
+      padding: 4px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .tab-btn {
+      border: none;
+      background: transparent;
+      padding: 9px;
+      border-radius: 6px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: var(--teal-dark);
+      color: #ffffff;
+    }
+
+    .form-group {
+      margin-bottom: 14px;
+    }
+
+    label {
+      display: block;
+      font-size: 0.88rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: #334155;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px 12px;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      background: #ffffff;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--teal-primary);
+      box-shadow: 0 0 0 3px rgba(20, 83, 85, 0.14);
+    }
+
+    .btn-primary {
+      width: 100%;
+      background-color: var(--teal-dark);
+      color: #ffffff;
+      border: none;
+      padding: 11px 16px;
+      border-radius: 6px;
+      font-size: 0.96rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background-color: var(--teal-hover);
+    }
+
+    .btn-sm {
+      background-color: var(--teal-primary);
+      color: #ffffff;
+      border: none;
+      padding: 7px 12px;
+      border-radius: 6px;
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-sm:hover {
+      background-color: var(--teal-dark);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .stat-box {
+      background: var(--bg-card);
+      border-left: 4px solid var(--teal-dark);
+      border-radius: 8px;
+      padding: 18px;
+      border-top: 1px solid #e2e8f0;
+      border-right: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .stat-value {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--teal-dark);
+      margin-top: 4px;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 1fr;
+      gap: 22px;
+      align-items: start;
+    }
+
+    @media (max-width: 820px) {
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .event-item {
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 14px;
+      margin-bottom: 12px;
+      background: #f8fafc;
+    }
+
+    .event-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 6px;
+    }
+
+    .event-title {
+      font-weight: 700;
+      color: var(--teal-dark);
+      font-size: 1rem;
+    }
+
+    .status-ongoing {
+      background: var(--success-bg);
+      color: var(--success-text);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 999px;
+    }
+
+    .event-meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+    }
+
+    .banner {
+      padding: 12px 16px;
+      border-radius: 8px;
+      margin-bottom: 18px;
+      font-size: 0.92rem;
+      display: none;
+    }
+
+    .banner.success {
+      display: block;
+      background: var(--success-bg);
+      color: var(--success-text);
+    }
+
+    .banner.error {
+      display: block;
+      background: var(--error-bg);
+      color: var(--error-text);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.88rem;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 9px 10px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    th {
+      color: var(--teal-dark);
+      font-weight: 700;
+      background: #f8fafc;
+    }
+  </style>
 </head>
 <body>
-
-    <header>
-        <h1>Student Org Portal</h1>
-        <span class="badge">Event & Attendance System</span>
-    </header>
-
-    <div class="container">
-        <!-- Register User Card -->
-        <div class="card">
-            <h2>Register User</h2>
-            <div class="form-group">
-                <label>Full Name</label>
-                <input type="text" id="regName" placeholder="e.g. Elritch Balijon">
-            </div>
-            <div class="form-group">
-                <label>Email Address</label>
-                <input type="email" id="regEmail" placeholder="e.g. student@email.com">
-            </div>
-            <div class="form-group">
-                <label>Password</label>
-                <input type="password" id="regPassword" placeholder="••••••••">
-            </div>
-            <div class="form-group">
-                <label>Role</label>
-                <select id="regRole">
-                    <option value="member">Member (Student)</option>
-                    <option value="admin">Administrator</option>
-                </select>
-            </div>
-            <button onclick="registerUser()">Register</button>
-        </div>
-
-        <!-- Create Event Card -->
-        <div class="card">
-            <h2>Create Event (Admin)</h2>
-            <div class="form-group">
-                <label>Event Title</label>
-                <input type="text" id="evtTitle" placeholder="e.g. IT Organization Meeting">
-            </div>
-            <div class="form-group">
-                <label>Description</label>
-                <input type="text" id="evtDesc" placeholder="Brief details about the event">
-            </div>
-            <div class="form-group">
-                <label>Date</label>
-                <input type="date" id="evtDate">
-            </div>
-            <div class="form-group">
-                <label>Location</label>
-                <input type="text" id="evtLocation" placeholder="e.g. Computer Lab CCL 1">
-            </div>
-            <div class="form-group">
-                <label>Created By (Your Name)</label>
-                <input type="text" id="evtCreator" placeholder="Your Name">
-            </div>
-            <button onclick="createNewEvent()">Create Event</button>
-        </div>
+  <header class="topbar">
+    <div class="brand-group">
+      <div class="brand-title">Student Org Portal</div>
+      <span class="pill-badge" id="headerBadge">Event &amp; Attendance System</span>
     </div>
+    <div class="nav-actions">
+      <a class="nav-link" href="team.html">Team</a>
+      <button class="nav-btn hidden" id="refreshBtn" onclick="loadDashboardData()">Refresh</button>
+      <button class="nav-btn hidden" id="logoutBtn" onclick="logoutUser()">Sign Out</button>
+    </div>
+  </header>
 
-    <script>
-const API_URL = "https://script.google.com/macros/s/AKfycbw-1akzJYXmwrJ1PGtIW3Orv0nwNr5ciYulyTEdOmL_nRdDvJ6FeQBuwOSypIjLi_R7-A/exec";
+  <main class="container">
+    <div id="statusBanner" class="banner"></div>
 
-        function registerUser() {
-            const payload = {
-                action: "registerUser",
-                name: document.getElementById('regName').value,
-                email: document.getElementById('regEmail').value,
-                password: document.getElementById('regPassword').value,
-                role: document.getElementById('regRole').value
-            };
+    <!-- AUTH VIEW (SIGN IN / SIGN UP) -->
+    <section id="authSection" class="auth-wrapper">
+      <div class="card">
+        <div class="tab-bar">
+          <button type="button" class="tab-btn active" id="tabLogin" onclick="switchAuthTab('login')">Sign In</button>
+          <button type="button" class="tab-btn" id="tabRegister" onclick="switchAuthTab('register')">Sign Up</button>
+        </div>
 
-            fetch(API_URL, {
-                method: "POST",
-                body: JSON.stringify(payload)
-            })
-            .then(res => res.json())
-            .then(res => alert(res.message))
-            .catch(err => alert("Error: " + err));
+        <!-- SIGN IN FORM -->
+        <form id="loginForm" onsubmit="handleLogin(event)">
+          <h2>Account Sign In</h2>
+          <p class="card-subtitle">Sign in with your registered email and password to access your dashboard.</p>
+
+          <div class="form-group">
+            <label for="loginEmail">Email Address</label>
+            <input type="email" id="loginEmail" placeholder="you@example.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" placeholder="Enter your password" required />
+          </div>
+
+          <button type="submit" class="btn-primary">Sign In</button>
+        </form>
+
+        <!-- SIGN UP FORM -->
+        <form id="registerForm" class="hidden" onsubmit="handleRegister(event)">
+          <h2>Create an Account</h2>
+          <p class="card-subtitle">Register as a Student Member or Administrator.</p>
+
+          <div class="form-group">
+            <label for="regName">Full Name</label>
+            <input type="text" id="regName" placeholder="e.g. Elritch Balijon" required />
+          </div>
+
+          <div class="form-group">
+            <label for="regEmail">Email Address</label>
+            <input type="email" id="regEmail" placeholder="you@example.com" required />
+          </div>
+
+          <div class="form-group">
+            <label for="regPassword">Password</label>
+            <input type="password" id="regPassword" placeholder="Create a password" required />
+          </div>
+
+          <div class="form-group">
+            <label for="regRole">Role</label>
+            <select id="regRole">
+              <option value="Member (Student)">Member (Student)</option>
+              <option value="Administrator">Administrator</option>
+            </select>
+          </div>
+
+          <button type="submit" class="btn-primary">Register</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- DASHBOARD VIEW -->
+    <section id="dashboardSection" class="hidden">
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-label">Logged-In User</div>
+          <div class="stat-value" id="statUserName" style="font-size:1.15rem;">—</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Active Events</div>
+          <div class="stat-value" id="statEventCount">0</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-label">Attendance Logs</div>
+          <div class="stat-value" id="statAttendanceCount">0</div>
+        </div>
+      </div>
+
+      <!-- STUDENT DASHBOARD -->
+      <div id="studentDashboard" class="dashboard-grid hidden">
+        <div class="card">
+          <h2>Ongoing &amp; Upcoming Events</h2>
+          <p class="card-subtitle">Check in to mark your attendance for active organization events.</p>
+          <div id="studentEventsList">Loading events...</div>
+        </div>
+
+        <div class="card">
+          <h2>My Attendance History</h2>
+          <p class="card-subtitle">Your recorded event check-ins.</p>
+          <div id="studentAttendanceList">Loading attendance...</div>
+        </div>
+      </div>
+
+      <!-- ADMIN DASHBOARD -->
+      <div id="adminDashboard" class="dashboard-grid hidden">
+        <div>
+          <div class="card">
+            <h2>Ongoing &amp; Scheduled Events</h2>
+            <p class="card-subtitle">Live overview of organization events from Google Sheets.</p>
+            <div id="adminEventsList">Loading events...</div>
+          </div>
+
+          <div class="card">
+            <h2>Recent Attendance Logs</h2>
+            <p class="card-subtitle">Student check-ins recorded across events.</p>
+            <div id="adminAttendanceList">Loading attendance...</div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h2>Create Event (Admin)</h2>
+          <p class="card-subtitle">Publish a new event directly to the Events sheet.</p>
+
+          <form id="createEventForm" onsubmit="handleCreateEvent(event)">
+            <div class="form-group">
+              <label for="evtTitle">Event Title</label>
+              <input type="text" id="evtTitle" placeholder="e.g. IT Organization Meeting" required />
+            </div>
+
+            <div class="form-group">
+              <label for="evtDesc">Description</label>
+              <textarea id="evtDesc" rows="3" placeholder="Brief details about the event" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="evtDate">Date</label>
+              <input type="date" id="evtDate" required />
+            </div>
+
+            <div class="form-group">
+              <label for="evtLocation">Location</label>
+              <input type="text" id="evtLocation" placeholder="e.g. Computer Lab CCL 1" required />
+            </div>
+
+            <div class="form-group">
+              <label for="evtCreator">Created By (Your Name)</label>
+              <input type="text" id="evtCreator" placeholder="Your Name" required />
+            </div>
+
+            <button type="submit" class="btn-primary">Create Event</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const API_URL = "https://script.google.com/macros/s/AKfycbw-1akzJYXmwrJ1PGtIW3Qr+OnwNr5cIYulyTEdOmL_nRdDvJ6FeQBuwO9yplJjLi_R7-A/exec";
+
+    let currentUser = null;
+    let cachedEvents = [];
+    let cachedAttendance = [];
+
+    function showBanner(message, type) {
+      const banner = document.getElementById("statusBanner");
+      banner.textContent = message;
+      banner.className = "banner " + type;
+    }
+
+    function clearBanner() {
+      const banner = document.getElementById("statusBanner");
+      banner.className = "banner";
+      banner.textContent = "";
+    }
+
+    function switchAuthTab(mode) {
+      clearBanner();
+      const isLogin = mode === "login";
+      document.getElementById("tabLogin").classList.toggle("active", isLogin);
+      document.getElementById("tabRegister").classList.toggle("active", !isLogin);
+      document.getElementById("loginForm").classList.toggle("hidden", !isLogin);
+      document.getElementById("registerForm").classList.toggle("hidden", isLogin);
+    }
+
+    async function postToApi(payload) {
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify(payload)
+      });
+      return await res.json();
+    }
+
+    async function handleRegister(e) {
+      e.preventDefault();
+      clearBanner();
+      const payload = {
+        action: "registerUser",
+        name: document.getElementById("regName").value.trim(),
+        email: document.getElementById("regEmail").value.trim(),
+        password: document.getElementById("regPassword").value,
+        role: document.getElementById("regRole").value
+      };
+
+      try {
+        const data = await postToApi(payload);
+        if (data.status === "success") {
+          showBanner(data.message || "User registered successfully! You can sign in now.", "success");
+          document.getElementById("registerForm").reset();
+          switchAuthTab("login");
+          document.getElementById("loginEmail").value = payload.email;
+        } else {
+          showBanner(data.message || "Registration failed.", "error");
+        }
+      } catch (err) {
+        showBanner("Error: " + err.message, "error");
+      }
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      clearBanner();
+      const payload = {
+        action: "loginUser",
+        email: document.getElementById("loginEmail").value.trim(),
+        password: document.getElementById("loginPassword").value
+      };
+
+      try {
+        const data = await postToApi(payload);
+        if (data.status === "success" && data.user) {
+          currentUser = data.user;
+          enterDashboard();
+        } else {
+          showBanner(data.message || "Invalid email or password.", "error");
+        }
+      } catch (err) {
+        showBanner("Error: " + err.message, "error");
+      }
+    }
+
+    function logoutUser() {
+      currentUser = null;
+      document.getElementById("dashboardSection").classList.add("hidden");
+      document.getElementById("studentDashboard").classList.add("hidden");
+      document.getElementById("adminDashboard").classList.add("hidden");
+      document.getElementById("refreshBtn").classList.add("hidden");
+      document.getElementById("logoutBtn").classList.add("hidden");
+      document.getElementById("authSection").classList.remove("hidden");
+      document.getElementById("headerBadge").textContent = "Event & Attendance System";
+      clearBanner();
+    }
+
+    function enterDashboard() {
+      const isAdmin = String(currentUser.role || "").toLowerCase().includes("admin");
+      document.getElementById("authSection").classList.add("hidden");
+      document.getElementById("dashboardSection").classList.remove("hidden");
+      document.getElementById("refreshBtn").classList.remove("hidden");
+      document.getElementById("logoutBtn").classList.remove("hidden");
+
+      document.getElementById("statUserName").textContent = `${currentUser.name} (${currentUser.role})`;
+      document.getElementById("headerBadge").textContent = isAdmin ? "Admin Dashboard" : "Student Portal";
+
+      if (isAdmin) {
+        document.getElementById("adminDashboard").classList.remove("hidden");
+        document.getElementById("studentDashboard").classList.add("hidden");
+        const creatorInput = document.getElementById("evtCreator");
+        if (creatorInput && !creatorInput.value) {
+          creatorInput.value = currentUser.name;
+        }
+      } else {
+        document.getElementById("studentDashboard").classList.remove("hidden");
+        document.getElementById("adminDashboard").classList.add("hidden");
+      }
+
+      loadDashboardData();
+    }
+
+    async function loadDashboardData() {
+      try {
+        const [evRes, attRes] = await Promise.all([
+          fetch(`${API_URL}?action=getEvents`).then(r => r.json()),
+          fetch(`${API_URL}?action=getAttendance`).then(r => r.json())
+        ]);
+
+        cachedEvents = evRes.status === "success" && Array.isArray(evRes.data) ? evRes.data : [];
+        cachedAttendance = attRes.status === "success" && Array.isArray(attRes.data) ? attRes.data : [];
+
+        document.getElementById("statEventCount").textContent = cachedEvents.length;
+        document.getElementById("statAttendanceCount").textContent = cachedAttendance.length;
+
+        renderDashboards();
+      } catch (err) {
+        showBanner("Failed to load dashboard data: " + err.message, "error");
+      }
+    }
+
+    function renderDashboards() {
+      const isAdmin = currentUser && String(currentUser.role || "").toLowerCase().includes("admin");
+
+      if (isAdmin) {
+        const adminEvContainer = document.getElementById("adminEventsList");
+        if (!cachedEvents.length) {
+          adminEvContainer.innerHTML = "<p class='card-subtitle'>No events found yet.</p>";
+        } else {
+          adminEvContainer.innerHTML = cachedEvents.map(ev => `
+            <div class="event-item">
+              <div class="event-header">
+                <span class="event-title">${ev.title || ev.Title || "Untitled Event"}</span>
+                <span class="status-ongoing">Ongoing / Active</span>
+              </div>
+              <div class="event-meta">
+                Date: ${ev.date || ev.Date || "TBA"} | Location: ${ev.location || ev.Location || "TBA"}
+              </div>
+              <p style="font-size:0.9rem;">${ev.description || ev.Description || ""}</p>
+            </div>
+          `).join("");
         }
 
-        function createNewEvent() {
-            const payload = {
-                action: "createEvent",
-                title: document.getElementById('evtTitle').value,
-                description: document.getElementById('evtDesc').value,
-                date: document.getElementById('evtDate').value,
-                location: document.getElementById('evtLocation').value,
-                creator: document.getElementById('evtCreator').value
-            };
-
-            fetch(API_URL, {
-                method: "POST",
-                body: JSON.stringify(payload)
-            })
-            .then(res => res.json())
-            .then(res => alert(res.message))
-            .catch(err => alert("Error: " + err));
+        const adminAttContainer = document.getElementById("adminAttendanceList");
+        if (!cachedAttendance.length) {
+          adminAttContainer.innerHTML = "<p class='card-subtitle'>No attendance records yet.</p>";
+        } else {
+          adminAttContainer.innerHTML = `
+            <table>
+              <thead>
+                <tr><th>Student</th><th>Event</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                ${cachedAttendance.slice(-8).reverse().map(att => `
+                  <tr>
+                    <td>${att.student_name || att.name || "Student"}</td>
+                    <td>${att.event_title || att.event_id || "Event"}</td>
+                    <td>${att.status || "Present"}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          `;
         }
-    </script>
+      } else {
+        const stuEvContainer = document.getElementById("studentEventsList");
+        if (!cachedEvents.length) {
+          stuEvContainer.innerHTML = "<p class='card-subtitle'>No events available right now.</p>";
+        } else {
+          stuEvContainer.innerHTML = cachedEvents.map(ev => {
+            const evId = ev.id || ev.ID || "";
+            const evTitle = ev.title || ev.Title || "Untitled Event";
+            return `
+              <div class="event-item">
+                <div class="event-header">
+                  <span class="event-title">${evTitle}</span>
+                  <span class="status-ongoing">Ongoing</span>
+                </div>
+                <div class="event-meta">
+                  Date: ${ev.date || ev.Date || "TBA"} | Location: ${ev.location || ev.Location || "TBA"}
+                </div>
+                <p style="font-size:0.9rem; margin-bottom:10px;">${ev.description || ev.Description || ""}</p>
+                <button class="btn-sm" onclick="handleMarkAttendance('${encodeURIComponent(evId)}', '${encodeURIComponent(evTitle)}')">
+                  Mark Attendance
+                </button>
+              </div>
+            `;
+          }).join("");
+        }
+
+        const myAtt = cachedAttendance.filter(att =>
+          String(att.student_email || att.email || "").toLowerCase() === String(currentUser.email || "").toLowerCase()
+        );
+        const stuAttContainer = document.getElementById("studentAttendanceList");
+        if (!myAtt.length) {
+          stuAttContainer.innerHTML = "<p class='card-subtitle'>You haven't checked into an event yet.</p>";
+        } else {
+          stuAttContainer.innerHTML = `
+            <table>
+              <thead>
+                <tr><th>Event</th><th>Status</th></tr>
+              </thead>
+              <tbody>
+                ${myAtt.map(att => `
+                  <tr>
+                    <td>${att.event_title || att.event_id || "Event"}</td>
+                    <td>${att.status || "Present"}</td>
+                  </tr>
+                `).join("")}
+              </tbody>
+            </table>
+          `;
+        }
+      }
+    }
+
+    async function handleMarkAttendance(encodedId, encodedTitle) {
+      clearBanner();
+      const payload = {
+        action: "logAttendance",
+        event_id: decodeURIComponent(encodedId),
+        event_title: decodeURIComponent(encodedTitle),
+        student_name: currentUser.name,
+        student_email: currentUser.email,
+        status: "Present"
+      };
+
+      try {
+        const data = await postToApi(payload);
+        if (data.status === "success") {
+          showBanner(data.message || "Attendance logged successfully!", "success");
+          loadDashboardData();
+        } else {
+          showBanner(data.message || "Could not log attendance.", "error");
+        }
+      } catch (err) {
+        showBanner("Error: " + err.message, "error");
+      }
+    }
+
+    async function handleCreateEvent(e) {
+      e.preventDefault();
+      clearBanner();
+      const payload = {
+        action: "createEvent",
+        title: document.getElementById("evtTitle").value.trim(),
+        description: document.getElementById("evtDesc").value.trim(),
+        date: document.getElementById("evtDate").value,
+        location: document.getElementById("evtLocation").value.trim(),
+        created_by: document.getElementById("evtCreator").value.trim()
+      };
+
+      try {
+        const data = await postToApi(payload);
+        if (data.status === "success") {
+          showBanner(data.message || "Event created successfully!", "success");
+          document.getElementById("createEventForm").reset();
+          document.getElementById("evtCreator").value = currentUser.name;
+          loadDashboardData();
+        } else {
+          showBanner(data.message || "Failed to create event.", "error");
+        }
+      } catch (err) {
+        showBanner("Error: " + err.message, "error");
+      }
+    }
+  </script>
 </body>
 </html>
