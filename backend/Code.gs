@@ -164,8 +164,8 @@ function doPost(e) {
       var id = 'ATT_' + new Date().getTime();
       var eventId = String(contents.event_id || contents.eventId || '').trim();
       var eventTitle = String(contents.event_title || contents.eventTitle || '').trim();
-      var userName = String(contents.user_name || contents.userName || '').trim();
-      var userEmail = String(contents.user_email || contents.userEmail || '').trim();
+      var userName = String(contents.student_name || contents.user_name || contents.userName || '').trim();
+      var userEmail = String(contents.student_email || contents.user_email || contents.userEmail || '').trim();
       var status = String(contents.status || 'Present').trim();
       var timestamp = new Date().toISOString();
 
