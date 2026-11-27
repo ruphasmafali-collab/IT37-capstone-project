@@ -159,13 +159,13 @@ function doPost(e) {
       })).setMimeType(ContentService.MimeType.JSON);
     }
 
-    if (action === 'logAttendance') {
+   if (action === 'logAttendance') {
       var sheet = ss.getSheetByName('Attendance');
       var id = 'ATT_' + new Date().getTime();
-      var eventId = String(contents.eventId || '').trim();
-      var eventTitle = String(contents.eventTitle || '').trim();
-      var userName = String(contents.userName || '').trim();
-      var userEmail = String(contents.userEmail || '').trim();
+      var eventId = String(contents.event_id || contents.eventId || '').trim();
+      var eventTitle = String(contents.event_title || contents.eventTitle || '').trim();
+      var userName = String(contents.user_name || contents.userName || '').trim();
+      var userEmail = String(contents.user_email || contents.userEmail || '').trim();
       var status = String(contents.status || 'Present').trim();
       var timestamp = new Date().toISOString();
 
@@ -176,10 +176,10 @@ function doPost(e) {
         message: 'Attendance logged successfully',
         attendance: {
           id: id,
-          eventId: eventId,
-          eventTitle: eventTitle,
-          userName: userName,
-          userEmail: userEmail,
+          event_id: eventId,
+          event_title: eventTitle,
+          user_name: userName,
+          user_email: userEmail,
           status: status,
           timestamp: timestamp
         }
