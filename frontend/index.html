@@ -421,6 +421,13 @@
         </div>
       </div>
 
+      <!-- LIVE CAMPUS WEATHER CARD (PUBLIC API) -->
+      <div class="card" style="margin-bottom: 20px;">
+        <h2>Campus Event Weather (Live Public API)</h2>
+        <p class="card-subtitle">Real-time weather check for upcoming organization activities.</p>
+        <div id="weatherWidget" style="font-weight: 600; color: #134e4a;">Loading live weather...</div>
+      </div>
+
       <!-- STUDENT DASHBOARD -->
       <div id="studentDashboard" class="dashboard-grid hidden">
         <div class="card">
@@ -625,8 +632,25 @@
         document.getElementById("statAttendanceCount").textContent = cachedAttendance.length;
 
         renderDashboards();
+        loadCampusWeather();
       } catch (err) {
         showBanner("Failed to load dashboard data: " + err.message, "error");
+      }
+    }
+
+    async function loadCampusWeather() {
+      const box = document.getElementById("weatherWidget");
+      if (!box) return;
+      try {
+        const res = await fetch(`${API_URL}?action=getWeather`);
+        const data = await res.json();
+        if (data.success) {
+          box.textContent = `${data.condition} • ${data.temperature}°C • Wind: ${data.windspeed} km/h (${data.source})`;
+        } else {
+          box.textContent = "Weather advisory unavailable right now.";
+        }
+      } catch (err) {
+        box.textContent = "Weather advisory unavailable right now.";
       }
     }
 
