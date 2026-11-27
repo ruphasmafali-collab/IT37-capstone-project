@@ -163,11 +163,13 @@ function doPost(e) {
       var sheet = ss.getSheetByName('Attendance');
       var id = 'ATT_' + new Date().getTime();
       var eventId = String(contents.eventId || '').trim();
-      var userId = String(contents.userId || '').trim();
+      var eventTitle = String(contents.eventTitle || '').trim();
       var userName = String(contents.userName || '').trim();
+      var userEmail = String(contents.userEmail || '').trim();
+      var status = String(contents.status || 'Present').trim();
       var timestamp = new Date().toISOString();
 
-      sheet.appendRow([id, eventId, userId, userName, timestamp]);
+      sheet.appendRow([id, eventId, eventTitle, userName, userEmail, status, timestamp]);
 
       return ContentService.createTextOutput(JSON.stringify({
         status: 'success',
@@ -175,8 +177,10 @@ function doPost(e) {
         attendance: {
           id: id,
           eventId: eventId,
-          userId: userId,
+          eventTitle: eventTitle,
           userName: userName,
+          userEmail: userEmail,
+          status: status,
           timestamp: timestamp
         }
       })).setMimeType(ContentService.MimeType.JSON);
