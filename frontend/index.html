@@ -664,7 +664,7 @@
               <tbody>
                 ${cachedAttendance.slice(-8).reverse().map(att => `
                   <tr>
-                    <td>${att.student_name || att.name || "Student"}</td>
+                    <td>${att.user_name || att.student_name || att.name || "Student"}</td>
                     <td>${att.event_title || att.event_id || "Event"}</td>
                     <td>${att.status || "Present"}</td>
                   </tr>
