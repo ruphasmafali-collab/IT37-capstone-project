@@ -700,7 +700,7 @@
         }
 
         const myAtt = cachedAttendance.filter(att =>
-          String(att.student_email || att.email || "").toLowerCase() === String(currentUser.email || "").toLowerCase()
+          String(att.user_email || att.student_email || att.email || "").toLowerCase() === String(currentUser.email || "").toLowerCase()
         );
         const stuAttContainer = document.getElementById("studentAttendanceList");
         if (!myAtt.length) {
